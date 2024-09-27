@@ -13,6 +13,11 @@ uniform vec3 u_PointLightColors[MAX_LIGHTS_POINT];
 
 uniform vec3 u_LightAmbient;
 
+uniform sampler2D samp_Clouds;
+uniform vec2 u_CloudSize;
+uniform vec2 u_CloudTime;
+uniform float u_CloudDarkeningFactor;
+
 void main() {
     vec3 lightValue = vec3(u_LightAmbient);
     
@@ -40,6 +45,10 @@ void main() {
     color.rgb *= lightValue;
     
     if (color.a < 0.1) discard;
+    
+    vec2 cloudUVs = v_vWorldPosition.xy / u_CloudSize;
+    vec4 cloudValue = texture2D(samp_Clouds, cloudUVs + u_CloudTime);
+    color.rgb = mix(color.rgb, color.rgb * u_CloudDarkeningFactor, 1.0 - cloudValue.a);
     
     gl_FragColor = color;
 }

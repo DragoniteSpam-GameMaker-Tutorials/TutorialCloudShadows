@@ -45,6 +45,7 @@
     {"id":{"name":"duck_front","path":"sprites/duck_front/duck_front.yy",},},
     {"id":{"name":"duck_left","path":"sprites/duck_left/duck_left.yy",},},
     {"id":{"name":"duck_right","path":"sprites/duck_right/duck_right.yy",},},
+    {"id":{"name":"spr_clouds","path":"sprites/spr_clouds/spr_clouds.yy",},},
     {"id":{"name":"spr_terrain","path":"sprites/spr_terrain/spr_terrain.yy",},},
   ],
   "resourceType":"GMProject",

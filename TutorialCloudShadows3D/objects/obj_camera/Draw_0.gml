@@ -15,10 +15,22 @@ camera_set_proj_mat(cam, matrix_build_projection_perspective_fov(-60, -16 / 9, 1
 camera_apply(cam);
 
 gpu_set_cullmode(cull_counterclockwise);
-//gpu_set_zwriteenable(true);
-//gpu_set_ztestenable(true);
-gpu_set_zfunc(cmpfunc_always);
+gpu_set_zwriteenable(true);
+gpu_set_ztestenable(true);
 shader_set(shd_forward);
+
+var u_samp_clouds = shader_get_sampler_index(shd_forward, "samp_Clouds");
+gpu_set_tex_repeat_ext(u_samp_clouds, true);
+gpu_set_tex_filter_ext(u_samp_clouds, true);
+texture_set_stage(u_samp_clouds, sprite_get_texture(spr_clouds, 0));
+
+var u_cloud_size = shader_get_uniform(shd_forward, "u_CloudSize");
+var u_cloud_time = shader_get_uniform(shd_forward, "u_CloudTime");
+var u_cloud_darkening = shader_get_uniform(shd_forward, "u_CloudDarkeningFactor");
+shader_set_uniform_f(u_cloud_size, sprite_get_width(spr_clouds) * 10, sprite_get_height(spr_clouds) * 10);
+var t = (current_time / 1000) / 10;
+shader_set_uniform_f(u_cloud_time, t);
+shader_set_uniform_f(u_cloud_darkening, 0.875);
 
 //*
 shader_set_uniform_f(shader_get_uniform(shd_forward, "u_LightAmbient"), 0.1, 0.1, 0.1);
